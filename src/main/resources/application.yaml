@@ -1,3 +1,19 @@
 spring:
-  application:
-    name: team8server
+  datasource:
+    url: jdbc:mysql://localhost:3306/team8?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=utf8
+    username: user
+    password: somepassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+
+server:
+  port: 8080
