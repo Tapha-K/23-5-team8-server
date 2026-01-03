@@ -44,3 +44,7 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### AI tool ###
+CLAUDE.md
+.claude
