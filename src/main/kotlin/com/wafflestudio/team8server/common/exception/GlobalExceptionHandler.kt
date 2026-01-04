@@ -59,4 +59,16 @@ class GlobalExceptionHandler {
             )
         return ResponseEntity.badRequest().body(response)
     }
+
+    @ExceptionHandler(UnauthorizedException::class)
+    fun handleUnauthorizedException(e: UnauthorizedException): ResponseEntity<ErrorResponse> {
+        val response =
+            ErrorResponse(
+                status = HttpStatus.UNAUTHORIZED.value(), // 401
+                error = "UNAUTHORIZED",
+                message = e.message ?: "인증에 실패했습니다",
+                errorCode = "INVALID_VALIDATION",
+            )
+        return ResponseEntity.badRequest().body(response)
+    }
 }

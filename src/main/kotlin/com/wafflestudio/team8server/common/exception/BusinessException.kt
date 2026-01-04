@@ -6,10 +6,18 @@ sealed class BusinessException(
     val errorCode: String,
 ) : RuntimeException(message)
 
-// 이메일 중복 예외 (회원가입 시 발생)
+// 이메일 중복 예외
 class DuplicateEmailException(
     email: String,
 ) : BusinessException(
         message = "이미 사용 중인 이메일입니다: $email",
         errorCode = "DUPLICATE_EMAIL", // client가 식별할 에러 코드
+    )
+
+// 로그인 실패
+class UnauthorizedException(
+    message: String,
+) : BusinessException(
+        message = message,
+        errorCode = "UNAUTHORIZED",
     )
