@@ -1,0 +1,15 @@
+package com.wafflestudio.team8server.common.exception
+
+// when 표현식에서 모든 케이스를 컴파일러가 체크
+sealed class BusinessException(
+    override val message: String,
+    val errorCode: String,
+) : RuntimeException(message)
+
+// 이메일 중복 예외 (회원가입 시 발생)
+class DuplicateEmailException(
+    email: String,
+) : BusinessException(
+        message = "이미 사용 중인 이메일입니다: $email",
+        errorCode = "DUPLICATE_EMAIL", // client가 식별할 에러 코드
+    )
