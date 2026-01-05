@@ -67,8 +67,8 @@ class GlobalExceptionHandler {
                 status = HttpStatus.UNAUTHORIZED.value(), // 401
                 error = "UNAUTHORIZED",
                 message = e.message ?: "인증에 실패했습니다",
-                errorCode = "INVALID_VALIDATION",
+                errorCode = "UNAUTHORIZED",
             )
-        return ResponseEntity.badRequest().body(response)
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response)
     }
 }
