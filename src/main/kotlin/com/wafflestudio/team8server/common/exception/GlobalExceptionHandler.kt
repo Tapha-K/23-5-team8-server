@@ -71,4 +71,18 @@ class GlobalExceptionHandler {
             )
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response)
     }
+
+    // 예상하지 못한 예외를 잡는 handler
+    @ExceptionHandler(Exception::class)
+    fun handleUnexpectedException(e: Exception): ResponseEntity<ErrorResponse> {
+        // 배포 시 로깅 (logger.error("Unexpected error", e))
+        val response =
+            ErrorResponse(
+                status = HttpStatus.INTERNAL_SERVER_ERROR.value(), // 500
+                error = "Internal Server Error",
+                message = "예상하지 못한 오류가 발생했습니다",
+                errorCode = "UNEXPECTED_ERROR",
+            )
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response)
+    }
 }
