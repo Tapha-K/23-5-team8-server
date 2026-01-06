@@ -1,5 +1,6 @@
 package com.wafflestudio.team8server.config
 
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -24,11 +25,21 @@ class SecurityConfig(
             .csrf { it.disable() }
             .sessionManagement { session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            }.exceptionHandling { exception ->
+                // 인증 실패 시 401 Unauthorized 반환
+                exception.authenticationEntryPoint { _, response, _ ->
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+                }
             }.authorizeHttpRequests { auth ->
                 // URL별 권한 설정
                 auth
-                    .requestMatchers("/api/auth/**")
-                    .permitAll()
+                    .requestMatchers(
+                        "/api/auth/signup",
+                        "/api/auth/login",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui.html",
+                    ).permitAll()
                     .anyRequest()
                     .authenticated()
             }

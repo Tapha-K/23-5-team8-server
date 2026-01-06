@@ -1,5 +1,6 @@
 package com.wafflestudio.team8server.common.exception
 
+import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.FieldError
@@ -8,18 +9,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import java.time.LocalDateTime
 
+@Schema(description = "에러 응답")
 data class ErrorResponse(
-    // 에러 발생 시각
+    @Schema(description = "에러 발생 시각")
     val timestamp: LocalDateTime = LocalDateTime.now(),
-    // HTTP 상태 코드 (400, 409 등)
+    @Schema(description = "HTTP 상태 코드")
     val status: Int,
-    // HTTP 상태 이름 ("Bad Request", "Conflict")
+    @Schema(description = "HTTP 상태 이름")
     val error: String,
-    // 사용자에게 표시할 에러 메시지
+    @Schema(description = "사용자에게 표시할 에러 메시지")
     val message: String,
-    // 에러 종류 식별자
+    @Schema(description = "에러 종류 식별자", nullable = true)
     val errorCode: String? = null,
-    // 필드별 에러
+    @Schema(description = "필드별 검증 에러 (유효성 검증 실패 시에만 포함)", nullable = true)
     val validationErrors: Map<String, String?>? = null,
 )
 

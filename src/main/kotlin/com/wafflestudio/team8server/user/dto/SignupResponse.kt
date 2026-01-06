@@ -1,21 +1,20 @@
 package com.wafflestudio.team8server.user.dto
 
 import com.wafflestudio.team8server.user.model.User
+import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
 
-// JSON 변환 예시:
-// {
-//   "id": 1,
-//   "email": "test@example.com",
-//   "nickname": "테스터",
-//   "profileImageUrl": null,
-//   "createdAt": "2026-01-03T22:30:00"
-// }
+@Schema(description = "회원가입 응답")
 data class SignupResponse(
+    @Schema(description = "사용자 ID", example = "1")
     val id: Long,
+    @Schema(description = "사용자 이메일", example = "user@example.com")
     val email: String,
+    @Schema(description = "사용자 닉네임", example = "홍길동")
     val nickname: String,
+    @Schema(description = "프로필 이미지 URL", example = "https://example.com/profile.jpg", nullable = true)
     val profileImageUrl: String?,
+    @Schema(description = "계정 생성 일시", example = "2026-01-06T12:00:00")
     val createdAt: LocalDateTime,
 ) {
     companion object {
@@ -25,7 +24,7 @@ data class SignupResponse(
         ): SignupResponse =
             SignupResponse(
                 id = user.id,
-                email = email, // User에는 없으므로 별도 전달하는 로직 필요
+                email = email,
                 nickname = user.nickname,
                 profileImageUrl = user.profileImageUrl,
                 createdAt = user.createdAt,
