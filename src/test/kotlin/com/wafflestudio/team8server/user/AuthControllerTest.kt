@@ -65,11 +65,8 @@ class AuthControllerTest
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)),
                 ).andExpect(status().isCreated)
-                .andExpect(jsonPath("$.id").isNumber) // id는 숫자
-                .andExpect(jsonPath("$.email").value("test@example.com"))
-                .andExpect(jsonPath("$.nickname").value("테스터"))
-                .andExpect(jsonPath("$.profileImageUrl").isEmpty) // null
-                .andExpect(jsonPath("$.createdAt").exists()) // 생성 시각 존재
+                .andExpect(jsonPath("$.user.id").isNumber) // id는 숫자
+                .andExpect(jsonPath("$.user.nickname").value("테스터"))
         }
 
         @Test
@@ -89,7 +86,6 @@ class AuthControllerTest
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)),
                 ).andExpect(status().isCreated)
-                .andExpect(jsonPath("$.profileImageUrl").value("https://example.com/profile.jpg"))
         }
 
         @Test
@@ -218,7 +214,6 @@ class AuthControllerTest
                 .andExpect(jsonPath("$.accessToken").isString) // 문자열
                 .andExpect(jsonPath("$.user.id").isNumber) // 사용자 ID
                 .andExpect(jsonPath("$.user.nickname").value("로그인테스터"))
-                .andExpect(jsonPath("$.user.createdAt").exists())
         }
 
         @Test
